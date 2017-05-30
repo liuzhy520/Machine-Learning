@@ -13,8 +13,11 @@ figure; hold on;
 %
 
 
+positive = find(y == 1);
+nagetive = find(y == 0);
 
-
+plot(X(positive, :), 'b+');
+plot(X(nagetive, :), 'ro');
 
 
 
