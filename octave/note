@@ -1,0 +1,20 @@
+T = theta;
+T(1) = 0;
+S = sigmoid(X * theta);
+J = ( (-y' * log(S)) - ((1 - y') * log(1-S)) ) / m + lambda / (2 * m) * sum(T .^ 2);
+grad = (S - y)' * X / m + lambda / m * T';
+
+initial_theta = zeros(n + 1, 1);
+options = optimset('GradObj', 'on', 'MaxIter', 50);
+for c = 1:num_labels
+  [theta] = ...
+    fmincg(@(t)(lrCostFunction(t, X, (y == c), lambda)), ...
+           initial_theta, options);
+  all_theta(c,:) = theta';
+end;
+
+[max_value, p] = max(sigmoid(X * all_theta'), [], 2);
+
+a1 = [ones(m, 1) X];
+a2 = [ones(m, 1) sigmoid(a1 * Theta1')];
+[max_value, p] = max(sigmoid(a2 * Theta2'), [], 2);
